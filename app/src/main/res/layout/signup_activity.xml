@@ -46,6 +46,7 @@
                 android:inputType="textEmailAddress"
                 android:hint="Email"
                 android:textColorHint="#FFFFFF"
+                android:textColorHighlight="#FFFFFF"
                 android:textColor="#fff"/>
         </android.support.design.widget.TextInputLayout>
 
