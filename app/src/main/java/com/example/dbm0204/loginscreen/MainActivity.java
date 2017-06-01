@@ -1,4 +1,5 @@
 package com.example.dbm0204.loginscreen;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -20,9 +21,9 @@ import butterknife.InjectView;
 public class MainActivity extends Activity {
     private static final String TAG ="LoginActivity";
     private static final int    REQUEST_SIGNUP=0;
-    @InjectView(R.id.login) Button login_button;
-    @InjectView(R.id.signup) TextView signupLink;
-    @InjectView(R.id.email) EditText email;
+    @InjectView(R.id.login)  Button login_button;
+    @InjectView(R.id.signup)  TextView signupLink;
+    @InjectView(R.id.email)  EditText email;
     @InjectView(R.id.password) EditText password;
 
     @Override
@@ -43,6 +44,16 @@ public class MainActivity extends Activity {
                 //start the Signup Activity
             }
         });
+        signupLink.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //Start the Signup Activity
+                Intent intent = new Intent(getApplicationContext(),signupActivity.class);
+                startActivityForResult(intent,REQUEST_SIGNUP);
+            }
+        });
     }
     public void login() {
         Log.d(TAG, "Login");
@@ -56,6 +67,18 @@ public class MainActivity extends Activity {
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Authenticating...");
         progressDialog.show();
+        String emailText= email.getText().toString();
+        String passwordText = password.getText().toString();
+        //TODO: Implement own authentication Logic
+
+        new android.os.Handler().postDelayed(
+                new Runnable(){
+                    public void run()
+                    {
+                        onLoginSucess();
+                        progressDialog.dismiss();
+                    }
+                },3000);
 
     }
     public boolean validate()
@@ -91,5 +114,21 @@ public class MainActivity extends Activity {
         Toast.makeText(getBaseContext(),"Login Failed",Toast.LENGTH_LONG).show();
         Button loginButton =(Button) findViewById(R.id.login);
         loginButton.setEnabled(true);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode,int resultCode, Intent data)
+    {
+        if(requestCode==REQUEST_SIGNUP){
+            if(resultCode==RESULT_OK)
+            {
+                this.finish();
+            }
+        }
+    }
+    @Override
+    public void onBackPressed()
+    {
+        moveTaskToBack(true);
     }
 }
