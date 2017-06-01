@@ -14,15 +14,22 @@ import android.widget.TextView;
 import android.util.Log;
 import android.app.ProgressDialog;
 import android.widget.Toast;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 public class MainActivity extends Activity {
     private static final String TAG ="LoginActivity";
     private static final int    REQUEST_SIGNUP=0;
+    @InjectView(R.id.login) Button login_button;
+    @InjectView(R.id.signup) TextView signupLink;
+    @InjectView(R.id.email) EditText email;
+    @InjectView(R.id.password) EditText password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button login_button= (Button) findViewById(R.id.login);
+        ButterKnife.inject(this);
         login_button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -55,8 +62,6 @@ public class MainActivity extends Activity {
     {
         boolean valid =true;
 
-        EditText email = (EditText) findViewById(R.id.email);
-        EditText password = (EditText)findViewById(R.id.password);
         String emailText = email.toString();
         String passwordText= password.toString();
 
